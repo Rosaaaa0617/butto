@@ -153,8 +153,8 @@ def Extrude(distance):
         sel_entities.append(entity)
     point1 = [0, 0, 0.]
     point2 = [0, 0, 2000.]
-    ret = base.SurfaceExtrudeExtrude(select_entities=sel_entities, dir_entities=dir_entities, direction_method=0, internal_face=False, respect_user_selection=False, point1=point1, point2=point2, distance=distance)
-    props = base.CollectEntities(ansa.base.CurrentDeck(), None, "SECTION_SHELL", False)
+    base.SurfaceExtrudeExtrude(select_entities=sel_entities, dir_entities=dir_entities, direction_method=0, internal_face=False, respect_user_selection=False, point1=point1, point2=point2, distance=distance)
+    props = base.CollectEntities(constants.LSDYNA, None, "SECTION_SHELL", False)
     base.AutoCalculateOrientation(props, True)
 
 
@@ -163,7 +163,7 @@ def GenerateImage(file_path):
     base.SetViewAngles(f_key="F10")
     directory = os.path.dirname(file_path)
     abs_filename_1 = os.path.join(directory, 'image1.png')
-    status = utils.SnapShot(abs_filename_1, image_format='PNG', transparent=True)
+    utils.SnapShot(abs_filename_1, image_format='PNG', transparent=True)
 
 # 定义要处理的文件夹路径
 file_path = r"d:\Users\ADMIN\Desktop\ansa-nogui\ansa-extrude-mesh\curve-processed.stp"
