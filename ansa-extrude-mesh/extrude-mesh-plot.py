@@ -166,7 +166,7 @@ def GenerateImage(file_path):
     utils.SnapShot(abs_filename_1, image_format='PNG', transparent=True)
 
 # 定义要处理的文件夹路径
-file_path = r"d:\Users\ADMIN\Desktop\ansa-nogui\ansa-extrude-mesh\curve-processed.stp"
+file_path = os.path.join(os.getcwd(), 'curve-processed.stp')
 distance = 2000
 
 OpenCADFixGeoBatchMesh(file_path, 2000)
