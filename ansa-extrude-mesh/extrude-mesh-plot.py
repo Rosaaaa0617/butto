@@ -1,10 +1,6 @@
 import os
 import ansa
-from ansa import utils
-from ansa import base
-from ansa import session 
-from ansa import constants
-from ansa import batchmesh
+from ansa import utils, base, constants, batchmesh, session
 
 
 def OpenCADFixGeoBatchMesh(file_path, distance):
@@ -86,6 +82,7 @@ def OpenCADFixGeoBatchMesh(file_path, distance):
         print("\nBatch mesh session has been halted!\n")
         return
     _SaveANSAFile(location_directory, directory)
+    GenerateImage(directory)
     print("\nProcess completed.\n")
 
 
@@ -136,8 +133,7 @@ def _RunSession(session,directory):
 
 def _SaveANSAFile(location_directory, directory):
     filename = location_directory[1]
-    if filename.endswith(".3dm"):
-        filename = filename[:-4]  # 移除最后四个字符（即“.3dm”）
+    filename = filename[:-4]     # Remove the last four characters
     output_ansa_file = directory + os.sep + filename + "_meshed.key"
     print("Saving file:", output_ansa_file)
     base.OutputLSDyna(filename=output_ansa_file)
@@ -158,17 +154,22 @@ def Extrude(distance):
     base.AutoCalculateOrientation(props, True)
 
 
-def GenerateImage(file_path):
+# nogui can't SnapShot
+def GenerateImage(directory):
     base.SetViewAngles(rot_x=0., rot_y=22.5, rot_z= -180.)
     base.SetViewAngles(f_key="F10")
-    directory = os.path.dirname(file_path)
-    abs_filename_1 = os.path.join(directory, 'image1.png')
-    utils.SnapShot(abs_filename_1, image_format='PNG', transparent=True)
+    output_png_file = directory + os.sep + 'image.png'
+    print("Saving Snapshot:", output_png_file)
+    utils.SnapShot(output_png_file, image_format='PNG', transparent=True)
 
-# 定义要处理的文件夹路径
+
+
+# Define the file path
 file_path = os.path.join(os.getcwd(), 'curve-processed.stp')
+
+# Define the length of extrude
 distance = 2000
 
 OpenCADFixGeoBatchMesh(file_path, 2000)
-GenerateImage(file_path)
+
 
