@@ -81,7 +81,7 @@ def OpenCADFixGeoBatchMesh(file_path, distance):
     if session_status == 2 or session_status == -1:
         print("\nBatch mesh session has been halted!\n")
         return
-    _SaveANSAFile(location_directory, directory)
+    _SaveANSAFile(directory)
     GenerateImage(directory)
     print("\nProcess completed.\n")
 
@@ -131,10 +131,8 @@ def _RunSession(session,directory):
     return session_status
 
 
-def _SaveANSAFile(location_directory, directory):
-    filename = location_directory[1]
-    filename = filename[:-4]     # Remove the last four characters
-    output_ansa_file = directory + os.sep + filename + "_meshed.key"
+def _SaveANSAFile(directory):
+    output_ansa_file = directory + os.sep + "model.key"
     print("Saving file:", output_ansa_file)
     base.OutputLSDyna(filename=output_ansa_file)
 
@@ -165,7 +163,7 @@ def GenerateImage(directory):
 
 
 # Define the file path
-file_path = os.path.join(os.getcwd(), 'curve-processed.stp')
+file_path = os.path.join(os.getcwd(), 'section.stp')
 
 # Define the length of extrude
 distance = 2000
