@@ -1,0 +1,21 @@
+# new file
+window clearcreate 3d keepses
+report clear all
+spreadsheet clearall
+spreadsheet windows deleteall
+
+# reading
+# p0=filepath
+opt var dirtext p0
+
+# select state range, from p1 to p2
+opt var valuetext p1
+opt var valuetext p2
+window active MetaPost
+read geom Dyna3d ${p0}/d3plot
+read dis Dyna3d ${p0}/d3plot ${p1}-${p2} Displacements
+read onlyfun Dyna3d ${p0}/d3plot ${p1}-${p2} Strains,FullTensor(UCS),OuterSurface
+read onlyvec Dyna3d ${p0}/d3plot ${p1}-${p2} Stresses,MajorPrincipal,MaxofInOutMid
+read dis Dyna3d ${p0}/d3plot ${p1}-${p2} Displacements
+read onlyfun Dyna3d ${p0}/d3plot ${p1}-${p2} Stresses,FullTensor(UCS),OuterSurface
+read onlyvec Dyna3d ${p0}/d3plot ${p1}-${p2} Stresses,MajorPrincipal,MaxofInOutMid

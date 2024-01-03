@@ -1,0 +1,82 @@
+
+opt var elempick p1
+read dis Dyna3d ${p0}/d3plot all Displacements
+read onlyfun Dyna3d ${p0}/d3plot all Strains,FullTensor(UCS),Outer Surface
+function append scalar enable
+read onlyfun Dyna3d ${p0}/d3plot all Stresses,FullTensor(UCS),Outer Surface
+
+# Select Elements p1 and press Middle Mouse Button or Enter to continue.
+
+xyplot create "Window1"
+window active "Window1"
+xyplot frommodel elements "Window1" 0 "${p1}" Centroid Time all all slabel "Strains,Normal-1(UCS),Outer Surface"
+xyplot frommodel elements "Window1" 0 "${p1}" Centroid Time all all slabel "Stresses,Normal-1(UCS),Outer Surface"
+xyplot newreserve 3 0
+xyplot curve function userdef "User defined" "c1.y" "c2.y" "Window1"
+xyplot axisoptions xlabel set "Window1" 0 "Strain,Normal-1(UCS),Outer Surface"
+xyplot curve select "Window1" "3"
+xyplot curve visible or "Window1" selected
+xyplot curve set sync axis "Window1" selected PointToState
+
+
+
+xyplot create "Window2"
+window active "Window2"
+xyplot frommodel elements "Window2" 0 "${p1}" Centroid Time all all slabel "Strains,Normal-2(UCS),Outer Surface"
+xyplot frommodel elements "Window2" 0 "${p1}" Centroid Time all all slabel "Stresses,Normal-2(UCS),Outer Surface"
+xyplot newreserve 3 0
+xyplot curve function userdef "User defined" "c1.y" "c2.y" "Window2"
+xyplot axisoptions xlabel set "Window2" 0 "Strains,Normal-2(UCS),Outer Surface"
+xyplot curve select "Window2" "3"
+xyplot curve set sync axis "Window2" selected PointToState
+
+
+xyplot create "Window3"
+window active "Window3"
+xyplot frommodel elements "Window3" 0 "${p1}" Centroid Time all all slabel "Strains,Normal-3(UCS),Outer Surface"
+xyplot frommodel elements "Window3" 0 "${p1}" Centroid Time all all slabel "Stresses,Normal-3(UCS),Outer Surface"
+xyplot newreserve 3 0
+xyplot curve function userdef "User defined" "c1.y" "c2.y" "Window3"
+xyplot axisoptions xlabel set "Window3" 0 "Strains,Normal-3(UCS),Outer Surface"
+xyplot curve select "Window3" "3"
+xyplot curve set sync axis "Window3" selected PointToState
+
+
+xyplot create "Window4"
+window active "Window4"
+xyplot frommodel elements "Window4" 0 "${p1}" Centroid Time all all slabel "Strains,Shear-12(UCS),Outer Surface"
+xyplot frommodel elements "Window4" 0 "${p1}" Centroid Time all all slabel "Stresses,Shear-12(UCS),Outer Surface"
+xyplot newreserve 3 0
+xyplot curve function userdef "User defined" "c1.y" "c2.y" "Window4"
+xyplot axisoptions xlabel set "Window4" 0 "Strains,Shear-12(UCS),Outer Surface"
+xyplot curve select "Window4" "3"
+xyplot curve set sync axis "Window4" selected PointToState
+
+
+xyplot create "Window5"
+window active "Window5"
+xyplot frommodel elements "Window5" 0 "${p1}" Centroid Time all all slabel "Strains,Shear-23(UCS),Outer Surface"
+xyplot frommodel elements "Window5" 0 "${p1}" Centroid Time all all slabel "Stresses,Shear-23(UCS),Outer Surface"
+xyplot newreserve 3 0
+xyplot curve function userdef "User defined" "c1.y" "c2.y" "Window5"
+xyplot axisoptions xlabel set "Window5" 0 "Strains,Shear-23(UCS),Outer Surface"
+xyplot curve select "Window5" "3"
+xyplot curve set sync axis "Window5" selected PointToState
+
+
+xyplot create "Window6"
+window active "Window6"
+xyplot frommodel elements "Window6" 0 "${p1}" Centroid Time all all slabel "Strains,Shear-31(UCS),Outer Surface"
+xyplot frommodel elements "Window6" 0 "${p1}" Centroid Time all all slabel "Stresses,Shear-31(UCS),Outer Surface"
+xyplot newreserve 3 0
+xyplot curve function userdef "User defined" "c1.y" "c2.y" "Window6"
+xyplot axisoptions xlabel set "Window6" 0 "Strains,Shear-31(UCS),Outer Surface"
+xyplot curve select "Window6" "3"
+xyplot curve set sync axis "Window6" selected PointToState
+
+xyplot curve set pointstyle "allwindows" selected 1
+xyplot curve visible or "allwindows" selected
+xyplot curve deselect "allwindows" "3"
+xyplot curve set pointsize "allwindows" selected 10
+
+window autotile

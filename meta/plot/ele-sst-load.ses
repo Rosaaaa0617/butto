@@ -1,0 +1,17 @@
+# new file
+window clearcreate 3d keepses
+report clear all
+spreadsheet clearall
+spreadsheet windows deleteall
+
+# reading
+# p0=filepath
+opt var dirtext p0
+window active MetaPost
+read geom Dyna3d ${p0}/d3plot
+
+
+read dis Dyna3d ${p0}/d3plot all Displacements
+read onlyfun Dyna3d ${p0}/d3plot all Strains,FullTensor(UCS),Outer Surface
+function append scalar enable
+read onlyfun Dyna3d ${p0}/d3plot all Stresses,FullTensor(UCS),Outer Surface

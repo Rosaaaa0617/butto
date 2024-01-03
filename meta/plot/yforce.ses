@@ -1,0 +1,22 @@
+# new file
+window clearcreate 3d keepses
+report clear all
+spreadsheet clearall
+spreadsheet windows deleteall
+
+# reading 
+opt var dirtext p0
+read geom Dyna3d ${p0}/d3plot
+read dis Dyna3d ${p0}/d3plot all Displacements
+
+# plot Y-Force
+xyplot create "rcforc"
+window active "rcforc"
+xyplot model active all
+xyplot model load binout ${p0}/binout0000
+xyplot read lsdyna "rcforc" "${p0}/binout0000" rcforc-Master all Y_force_(yf)
+window autotile
+xyplot plotoptions title set "rcforc" 0 ""
+
+# save plot
+write jpeg "${p0}/rcforc.jpg" 85
