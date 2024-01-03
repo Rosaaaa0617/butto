@@ -163,7 +163,7 @@ def GenerateImage(directory):
 
 
 # Define the file path
-file_path = os.path.join(os.getcwd(), 'section.stp')
+file_path = r"d:\Users\ADMIN\Desktop\nogui\ansa\section.step"
 
 # Define the length of extrude
 distance = 2000
