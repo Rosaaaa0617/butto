@@ -1,0 +1,7 @@
+window active MetaPost
+read geom Dyna3d Z:/butto/dirty/d3plot
+read dis Dyna3d Z:/butto/dirty/d3plot all Displacements
+view default isometric
+render mode opengl
+animation for
+record movie forward duration 3.76 gif "Z:/butto/output/model.gif"

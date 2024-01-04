@@ -176,7 +176,7 @@ def nodes2set(distance):
             set_head.append(ent)
             base.AddToSet(head, set_head)
             
-        elif distance-1 <= z <= distance+1:
+        elif distance-3000 <= z <= distance+1:
             set_tail.append(ent)
             base.AddToSet(tail, set_tail)
             
@@ -186,10 +186,10 @@ def nodes2set(distance):
 
 # Define the file path
 file_path = r"d:\Users\ADMIN\Desktop\nogui\ansa\section.step"
-save_directory = r"Z:\butto\output"
+save_directory = r"Z:\butto\dirty"
 
 # Define the length of extrude
-distance = 2000
+distance = 8000
 
 OpenCADFixGeoBatchMesh(file_path, save_directory, distance)
 
