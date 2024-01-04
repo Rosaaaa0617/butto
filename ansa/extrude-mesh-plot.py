@@ -3,7 +3,7 @@ import ansa
 from ansa import utils, base, constants, batchmesh, session
 
 
-def OpenCADFixGeoBatchMesh(file_path, distance):
+def OpenCADFixGeoBatchMesh(file_path, save_directory, distance):
     '''
     Name: OpenCADFixGeoBatchMesh
     Description: Opens CAD file, fixes geometry errors, runs batch mesh, exports statistics report and saves it as ANSA file.
@@ -81,7 +81,7 @@ def OpenCADFixGeoBatchMesh(file_path, distance):
     if session_status == 2 or session_status == -1:
         print("\nBatch mesh session has been halted!\n")
         return
-    _SaveANSAFile(directory)
+    _SaveANSAFile(save_directory)
     GenerateImage(directory)
     print("\nProcess completed.\n")
 
@@ -164,10 +164,11 @@ def GenerateImage(directory):
 
 # Define the file path
 file_path = r"d:\Users\ADMIN\Desktop\nogui\ansa\section.step"
+save_directory = r"Z:\butto\output"
 
 # Define the length of extrude
 distance = 2000
 
-OpenCADFixGeoBatchMesh(file_path, 2000)
+OpenCADFixGeoBatchMesh(file_path, save_directory, distance)
 
 
