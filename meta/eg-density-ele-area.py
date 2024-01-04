@@ -2,6 +2,7 @@
 import meta
 from meta import elements, constants, models, results, windows, utils, plot2d
 
+# get elements volume & area
 def main():
     model = models.Model(0)
     elem = elements.Element(id=97124, type=constants.SHELL, second_id=-1, model_id=model.id)
@@ -11,6 +12,7 @@ def main():
     print(vol)
     print(area)
     calculate(area)
+
 
 def calculate(val):
     type = 'plain'

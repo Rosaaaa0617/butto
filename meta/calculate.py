@@ -1,8 +1,7 @@
-# energy density* element area
 import meta
 from meta import elements, constants, models, results, windows, utils, plot2d
 
-
+# strain energy density calculate base on strains and stresses
 def main():
     type = 'plain'
     name_type = 'strain energy density'
@@ -18,6 +17,7 @@ def main():
     ret = plot2d.CurveFunctionUserDefined(type, name_type, x_formula, y_formula, complex_formula, window)
     print(ret)
 
+# try to find the relation strain energy density calculalted vs meta
 def r():
     type = 'plain'
     name_type = 'relation'

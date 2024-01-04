@@ -1,7 +1,6 @@
 import os
 import ansa
-from ansa import utils, base, constants, batchmesh, session
-
+from ansa import *
 
 def OpenCADFixGeoBatchMesh(file_path, save_directory, distance):
     '''
@@ -81,8 +80,11 @@ def OpenCADFixGeoBatchMesh(file_path, save_directory, distance):
     if session_status == 2 or session_status == -1:
         print("\nBatch mesh session has been halted!\n")
         return
+    
+    nodes2set(distance)
     _SaveANSAFile(save_directory)
     GenerateImage(directory)
+
     print("\nProcess completed.\n")
 
 
@@ -138,18 +140,18 @@ def _SaveANSAFile(directory):
 
 
 def Extrude(distance):
-    sel_entities = []
+    sel_entities = base.CollectEntities(constants.LSDYNA, None,"CURVE")
     dir_entities = []
-    for i in range(1, 100):
-        entity = base.GetEntity(ansa.base.CurrentDeck(), 'CURVE', i)
-        if not entity:
-            break
-        sel_entities.append(entity)
     point1 = [0, 0, 0.]
     point2 = [0, 0, 2000.]
     base.SurfaceExtrudeExtrude(select_entities=sel_entities, dir_entities=dir_entities, direction_method=0, internal_face=False, respect_user_selection=False, point1=point1, point2=point2, distance=distance)
     props = base.CollectEntities(constants.LSDYNA, None, "SECTION_SHELL", False)
     base.AutoCalculateOrientation(props, True)
+    
+    deck = constants.LSDYNA    
+    for ent in base.CollectEntitiesI(constants.LSDYNA, None, 'SECTION_SHELL'):
+        ent.set_entity_values(deck,{'MID':1})
+
 
 
 # nogui can't SnapShot
@@ -160,6 +162,26 @@ def GenerateImage(directory):
     print("Saving Snapshot:", output_png_file)
     utils.SnapShot(output_png_file, image_format='PNG', transparent=True)
 
+
+def nodes2set(distance):
+      
+    set_head = []
+    set_tail = []
+    head = base.CreateEntity(constants.LSDYNA, "SET", {'Name': 'head'})
+    tail = base.CreateEntity(constants.LSDYNA, "SET", {'Name': 'tail'})
+      
+    for ent in base.CollectEntitiesI(constants.LSDYNA, None, 'NODE'):
+        z = ent.position[2]
+        if 0 <= z <= 1:
+            set_head.append(ent)
+            base.AddToSet(head, set_head)
+            
+        elif distance-1 <= z <= distance+1:
+            set_tail.append(ent)
+            base.AddToSet(tail, set_tail)
+            
+    print(len(set_head))    
+    print(len(set_tail))  
 
 
 # Define the file path
