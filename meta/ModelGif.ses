@@ -1,7 +1,31 @@
 window active MetaPost
 read geom Dyna3d Z:/butto/dirty/d3plot
 read dis Dyna3d Z:/butto/dirty/d3plot all Displacements
-view default isometric
-render mode opengl
+read onlyfun Dyna3d Z:/butto/dirty/d3plot all Stresses,SignedMaxPrincipal,MaxofInOutMid
 animation for
-record movie forward duration 3.76 gif "Z:/butto/output/model.gif"
+
+0:opt winstate "MetaPost" 52
+window active "MetaPost"
+model active empty
+model active 0
+view set 1276.79,1377.09,1001.24,-1358.03,-273.706,-6455.56,-0.0490791,0.978704,-0.199325,-1358.03,-273.706,-6455.56,-920.936,17079.1,28,0
+window create "Window2"
+window active "Window2"
+window autotile
+window size 714,831
+window active "MetaPost"
+window size 714,831
+model copy 0
+page modelpaste 0 "Window2"
+model active empty
+model active 0
+model allwinshow "Window2" all
+window active "Window2"
+model active empty
+model active 0
+view default isometric
+animation activelabel enable
+animation for
+record movie forward duration 3.76 gif "Z:/butto/output/output.gif"
+
+

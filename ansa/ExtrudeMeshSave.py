@@ -106,10 +106,10 @@ def _CheckAndFixGeometry():
 
 def _CheckParamsAndCriteriaFiles(directory):    
     session = batchmesh.GetNewSession()
-    parameters = batchmesh.ReadSessionMeshParams(session, directory+os.sep+'sample_parameters.ansa_mpar')
+    parameters = batchmesh.ReadSessionMeshParams(session, r"d:\Users\ADMIN\Desktop\nogui\ansa\sample_parameters.ansa_mpar")
     if parameters == 1:
         print("Reading Mesh Parameters...\n")
-    criteria = batchmesh.ReadSessionQualityCriteria(session, directory+os.sep+'sample_quality.ansa_qual')
+    criteria = batchmesh.ReadSessionQualityCriteria(session, r"d:\Users\ADMIN\Desktop\nogui\ansa\sample_quality.ansa_qual")
     if criteria == 1:
         print("Reading Quality Criteria...\n")
     
@@ -151,6 +151,9 @@ def Extrude(distance):
     deck = constants.LSDYNA    
     for ent in base.CollectEntitiesI(constants.LSDYNA, None, 'SECTION_SHELL'):
         ent.set_entity_values(deck,{'MID':1})
+        ent.set_entity_values(deck,{'T1':3})
+        ent.set_entity_values(deck,{'HGID':1})
+        ent.set_entity_values(deck,{'NIP':5})
 
 
 
@@ -176,7 +179,7 @@ def nodes2set(distance):
             set_head.append(ent)
             base.AddToSet(head, set_head)
             
-        elif distance-3000 <= z <= distance+1:
+        elif distance-distance/10 <= z <= distance+1:
             set_tail.append(ent)
             base.AddToSet(tail, set_tail)
             
@@ -185,11 +188,11 @@ def nodes2set(distance):
 
 
 # Define the file path
-file_path = r"d:\Users\ADMIN\Desktop\nogui\ansa\section.step"
+file_path = r"Z:\butto\dirty\section.stp"
 save_directory = r"Z:\butto\dirty"
 
 # Define the length of extrude
-distance = 8000
+distance = 3000
 
 OpenCADFixGeoBatchMesh(file_path, save_directory, distance)
 

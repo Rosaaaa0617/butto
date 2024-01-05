@@ -18,7 +18,7 @@
     element_type                               = mixed
     element_order                              = first
     existing_mesh_treatment                    = erase
-    target_element_length                      = 30.
+    target_element_length                      = 40.
     general_min_target_len                     = 0.
     structural_self_proximity                  = false
     structural_max_angle_between_normals       = 40.
