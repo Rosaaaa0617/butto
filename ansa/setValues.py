@@ -1,4 +1,4 @@
-import ansa
+import ansa, os
 from ansa import *
 
 def main(file_path):
@@ -12,9 +12,13 @@ def main(file_path):
 
 
 def _SaveANSAFile():
-    output_ansa_file = r"Z:\butto\dirty\total.key"
+    directory = os.getcwd()
+    file_name = "total.key"
+    output_ansa_file = os.path.join(directory, file_name)
     print("Saving file:", output_ansa_file)
     base.OutputLSDyna(filename=output_ansa_file, mode = "all", disregard_includes="on")
+
+
 
 
 file_path = r"Z:\butto\asset\cantileverControl.key"

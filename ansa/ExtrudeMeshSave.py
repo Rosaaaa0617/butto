@@ -2,13 +2,12 @@ import os
 import ansa
 from ansa import *
 
-def OpenCADFixGeoBatchMesh(file_path, save_directory, distance):
+def OpenCADFixGeoBatchMesh(file_path, directory, distance):
     '''
     Name: OpenCADFixGeoBatchMesh
     Description: Opens CAD file, fixes geometry errors, runs batch mesh, exports statistics report and saves it as ANSA file.
     '''
-    sel_file = [file_path]
-    print("Reading file:", sel_file[0])
+    print("Reading file:", file_path)
     
     base.SetANSAdefaultsValues({
         # ANSA Tolerances
@@ -59,13 +58,12 @@ def OpenCADFixGeoBatchMesh(file_path, save_directory, distance):
         "GEOMETRY_CLEAN_UP":"false",
         "TRANSLATORS_WRITE_LOG":"true"
     })
-    base.Open(sel_file[0])
-    location_directory = os.path.split(sel_file[0])
-    directory = location_directory[0]
+    base.Open(file_path)
+
     
     Extrude(distance)
 
-    session,parameters,criteria = _CheckParamsAndCriteriaFiles(directory)
+    session,parameters,criteria = _CheckParamsAndCriteriaFiles()
     if parameters == 0:
         print("\nNo such file! sample_parameters.ansa_mpar file does not exist in the directory!\n")
         return
@@ -82,7 +80,7 @@ def OpenCADFixGeoBatchMesh(file_path, save_directory, distance):
         return
     
     nodes2set(distance)
-    _SaveANSAFile(save_directory)
+    _SaveANSAFile(directory)
     GenerateImage(directory)
 
     print("\nProcess completed.\n")
@@ -104,7 +102,7 @@ def _CheckAndFixGeometry():
     return length_of_faces_list
     
 
-def _CheckParamsAndCriteriaFiles(directory):    
+def _CheckParamsAndCriteriaFiles():    
     session = batchmesh.GetNewSession()
     parameters = batchmesh.ReadSessionMeshParams(session, r"d:\Users\ADMIN\Desktop\nogui\ansa\sample_parameters.ansa_mpar")
     if parameters == 1:
@@ -136,7 +134,7 @@ def _RunSession(session,directory):
 def _SaveANSAFile(directory):
     output_ansa_file = directory + os.sep + "model.key"
     print("Saving file:", output_ansa_file)
-    base.OutputLSDyna(filename=output_ansa_file)
+    base.OutputLSDyna(filename=output_ansa_file, mode = "all")
 
 
 def Extrude(distance):
@@ -148,20 +146,13 @@ def Extrude(distance):
     props = base.CollectEntities(constants.LSDYNA, None, "SECTION_SHELL", False)
     base.AutoCalculateOrientation(props, True)
     
-    deck = constants.LSDYNA    
-    for ent in base.CollectEntitiesI(constants.LSDYNA, None, 'SECTION_SHELL'):
-        ent.set_entity_values(deck,{'MID':1})
-        ent.set_entity_values(deck,{'T1':3})
-        ent.set_entity_values(deck,{'HGID':1})
-        ent.set_entity_values(deck,{'NIP':5})
-
 
 
 # nogui can't SnapShot
 def GenerateImage(directory):
     base.SetViewAngles(rot_x=0., rot_y=22.5, rot_z= -180.)
     base.SetViewAngles(f_key="F10")
-    output_png_file = directory + os.sep + 'image.png'
+    output_png_file = directory + os.sep + 'Snapshot.png'
     print("Saving Snapshot:", output_png_file)
     utils.SnapShot(output_png_file, image_format='PNG', transparent=True)
 
@@ -183,17 +174,18 @@ def nodes2set(distance):
             set_tail.append(ent)
             base.AddToSet(tail, set_tail)
             
-    print(len(set_head))    
-    print(len(set_tail))  
 
 
-# Define the file path
-file_path = r"Z:\butto\dirty\section.stp"
-save_directory = r"Z:\butto\dirty"
+# Find the file path
+# call this script where the section.stp is
+directory = os.getcwd()
+file_name = "section.stp"
+file_path = os.path.join(directory, file_name)
 
 # Define the length of extrude
 distance = 3000
 
-OpenCADFixGeoBatchMesh(file_path, save_directory, distance)
+#
+OpenCADFixGeoBatchMesh(file_path, directory, distance)
 
 
