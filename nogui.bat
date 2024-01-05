@@ -10,7 +10,7 @@ call "C:\Users\ADMIN\anaconda3\Scripts\activate.bat" python3.11
 cd /d "E:\#code\hawp"
 
 :: Run .jpg to .json
-call predic.bat "Z:\butto\input\image.jpg" 0.25
+call predic.bat "Z:\butto\input\image.jpg" 0.2
 
 :: Run .json to .txt
 cd /d "Z:\butto\dirty"
