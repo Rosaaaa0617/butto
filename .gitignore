@@ -1,0 +1,7 @@
+/test
+/data/output
+__pycache__
+*.dmp
+*.xml
+*.log
+.vscode/
