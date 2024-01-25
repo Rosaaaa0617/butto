@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+      {
+          "label": "run ansa",
+          "type": "shell",
+          "command": "E:\\#code\\butto\\.vscode\\ansa.bat",
+          "group": {
+              "kind": "build",
+              "isDefault": true
+          }
+      }
+  ]
+}
+
+  
+  
