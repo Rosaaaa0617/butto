@@ -1,15 +1,19 @@
-import random, os, ansa,sys
+import random, os, ansa, sys
 from ansa import base, constants,session
 
 current_dir_path = os.path.dirname(__file__)
-sys.path.append(current_dir_path)
+sys.path.append(os.path.dirname(current_dir_path))
 
-from pre import segments
-import group
+from mid.pre import segments
+from mid.utils import LsDyna
+from mid import group
+
 
 # create 2d model
-def CreCurveSetFaces(ext,directory,distance):
+# True: extrude
+def CreCurveSetFaces(ext,directory):
     line_sets,node_x,node_y=segments.get_line_sets(directory)
+    # print(line_sets)
     for line_set in line_sets:
         curves = []
         for i in range(len(line_set)):     
@@ -21,33 +25,37 @@ def CreCurveSetFaces(ext,directory,distance):
         # if not extrude, create faces and random set of section
         if not ext:                
             base.FacesNewPlanar(faces_array=curves, respect_user_selection=False)
-        else:
-            Extrude(distance)
-            
     if not ext:
         group.RandomSet(line_sets)
 
 
 
 def Extrude(distance):
-    sel_entities = base.CollectEntities(constants.LSDYNA, None,"CURVE")
-    dir_entities = []
+    ent = LsDyna.prop('CURVE')
+    dir = []
     point1 = [0, 0, 0.]
-    point2 = [0, 0, 2000.]
-    base.SurfaceExtrudeExtrude(select_entities=sel_entities, dir_entities=dir_entities, direction_method=0, internal_face=False, respect_user_selection=False, point1=point1, point2=point2, distance=distance)
+    point2 = [0, 0, distance]
+    base.SurfaceExtrudeExtrude(select_entities=list(ent), dir_entities=dir, direction_method=0, internal_face=False, respect_user_selection=False, point1=point1, point2=point2)
     
-    props = base.CollectEntities(constants.LSDYNA, None, "SECTION_SHELL", False)
-    base.AutoCalculateOrientation(props, True)
+    shell = LsDyna.prop('SECTION_SHELL')
+    base.AutoCalculateOrientation(list(shell), True)
 
         
-        
-
-
-
 if __name__ == "__main__":
-    directory = r"E:\#code\butto\data\input"
-    line_sets,node_x,node_y = segments.get_line_sets(directory)
-    session.New("discard")
-    CreCurveSetFaces(False,directory,0)
-    # SaveANSAFile(r"E:\#code\butto\data\output\curve.key")
-    base.SetCurrentDeck(constants.LSDYNA)
+    dir = r"data\input\multi"
+    
+    distance = 2000
+    mode = "2d"
+    LsDyna.new()
+        
+    if mode == "2d":
+        print("mode:",mode)
+        CreCurveSetFaces(False,dir)
+    else:
+        print("mode:",mode)
+        CreCurveSetFaces(True,dir)
+        Extrude(distance)
+        
+    
+
+

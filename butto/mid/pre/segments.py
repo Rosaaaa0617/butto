@@ -15,10 +15,7 @@ def read_elements(directory):
     file_path = os.path.join(directory, file_name)
     with open(file_path) as elements_file:
         eles = csv.reader(elements_file, delimiter=',')
-        segments = []
-        for ele in eles:
-            a, b = ele     
-            segments.append((int(a),int(b)))  
+        segments = [(int(a),int(b)) for a,b in eles]
     # print(segments)
     return segments
 
@@ -34,7 +31,7 @@ def read_nodes(directory):
             x, y = node  
             node_x.append(float(x))
             node_y.append(float(y))
-            # base.Newpoint(float(x), float(y), 0)          
+        
     return node_x,node_y
 
    
@@ -73,6 +70,7 @@ def separate_graphs(connections):
     result = [[connections[i-1] for i in line_set1]]
     result.extend(separate_graphs([connections[i-1] for i in line_set2]))
     
+    # delete single redundant line segment
     alone = set()
     for sublist in result:
         if len(sublist) == 1:

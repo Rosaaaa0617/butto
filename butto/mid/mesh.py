@@ -133,8 +133,6 @@ if __name__ == "__main__":
     directory = r"E:\#code\butto\data\output"
     
     # input cross-section file
-    session.New("discard")
-    base.InputLSDyna(filename=r"d:\Users\ADMIN\Desktop\nogui\ansa\2dmesh\par.key", header="merge", create_parameters="on")
     
     FixGeoBatchMesh(directory,input_dir)
     

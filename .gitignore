@@ -1,6 +1,9 @@
-/test/*
+/local
 /data/output/*
 __pycache__
 *.dmp
 *.xml
 *.log
+/.vscode
+/fig
+*.bat

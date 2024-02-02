@@ -1,0 +1,10 @@
+window active MetaPost
+read geom Dyna3d {0}/d3plot
+read dis Dyna3d {0}/d3plot all Displacements
+read onlyfun Dyna3d {0}/d3plot all Stresses,SignedMaxPrincipal,MaxofInOutMid
+animation for
+
+grstyle wire on
+animation for
+write html3d "{0}/output.html"
+
